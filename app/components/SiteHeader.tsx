@@ -29,8 +29,8 @@ export default function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Navigation principale">
         <a href="#services">Services</a>
-        <a href="#realisations">Réalisations</a>
         <a href="#avis">Avis</a>
+        <a href="#contact">Contact</a>
         <a href="#devis">Devis</a>
       </nav>
 
@@ -54,8 +54,8 @@ export default function SiteHeader() {
         <div className="mobile-menu-inner">
           <p className="mobile-menu-label">Navigation</p>
           <a href="#services" onClick={close}>Services</a>
-          <a href="#realisations" onClick={close}>Réalisations</a>
           <a href="#avis" onClick={close}>Avis clients</a>
+          <a href="#contact" onClick={close}>Contact</a>
           <a href="#devis" onClick={close}>Demander un devis</a>
           <a className="mobile-phone" href={`tel:${PHONE_LINK}`} onClick={close}>
             07 67 32 27 04

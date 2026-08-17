@@ -1667,3 +1667,578 @@ ul {
     display: none;
   }
 }
+
+/* GIRARD V2 — calmer scale, logo hero, carousels and review deck */
+:root {
+  --header-height: 86px;
+}
+
+/* Overall scale: less oversized, more breathing room */
+.hero h1 {
+  max-width: 820px;
+  font-size: clamp(52px, 6.2vw, 98px);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.section-heading h2,
+.method-copy h2,
+.reviews-intro h2,
+.contact-block h2,
+.quote-intro h2 {
+  font-size: clamp(36px, 4vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.section-content,
+.gallery-content {
+  padding: clamp(62px, 6vw, 96px) clamp(34px, 5vw, 82px);
+}
+
+.method-copy,
+.reviews-intro,
+.contact-block {
+  padding: clamp(62px, 6vw, 96px) clamp(34px, 5vw, 82px);
+}
+
+.section-rail {
+  padding: 72px 24px;
+}
+
+.service-ledger {
+  margin-top: 52px;
+}
+
+.service-row {
+  min-height: 0;
+  padding: 30px 0;
+}
+
+.method-steps article {
+  min-height: 250px;
+  padding: 34px;
+}
+
+.method-steps h3 {
+  margin-top: 54px;
+  font-size: 27px;
+}
+
+/* Hero: brand-led rather than a stock/project image */
+.hero {
+  grid-template-columns: minmax(0, 1.14fr) minmax(430px, 0.86fr);
+}
+
+.hero-copy {
+  padding-top: clamp(64px, 7vw, 108px);
+  padding-bottom: clamp(64px, 7vw, 108px);
+}
+
+.hero-brand-visual {
+  position: relative;
+  display: grid;
+  min-height: 100%;
+  overflow: hidden;
+  place-items: center;
+  border-left: 1px solid var(--line-dark);
+  background:
+    radial-gradient(circle at 58% 42%, rgba(232, 180, 85, 0.12), transparent 23%),
+    linear-gradient(145deg, #111 0%, #090909 58%, #15120d 100%);
+}
+
+.hero-brand-visual::after {
+  display: none;
+}
+
+.hero-brand-mark {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  width: min(62%, 470px);
+  aspect-ratio: 1 / 0.78;
+  place-items: center;
+}
+
+.hero-brand-mark::before {
+  position: absolute;
+  inset: -15%;
+  border: 1px solid rgba(232, 180, 85, 0.24);
+  content: "";
+  transform: rotate(8deg);
+}
+
+.hero-brand-mark::after {
+  position: absolute;
+  inset: -4% 10%;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  content: "";
+  transform: rotate(-6deg);
+}
+
+.hero-brand-mark img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: none;
+}
+
+.hero-brand-shape,
+.hero-brand-line {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero-brand-shape-one {
+  top: 14%;
+  right: 12%;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(232, 180, 85, 0.2);
+  border-radius: 50%;
+}
+
+.hero-brand-shape-two {
+  bottom: 14%;
+  left: 11%;
+  width: 110px;
+  height: 110px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.hero-brand-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 180, 85, 0.42), transparent);
+}
+
+.hero-brand-line-one {
+  top: 28%;
+  left: 3%;
+  width: 46%;
+  transform: rotate(-18deg);
+}
+
+.hero-brand-line-two {
+  right: 3%;
+  bottom: 28%;
+  width: 42%;
+  transform: rotate(18deg);
+}
+
+/* Gallery carousel */
+.gallery-carousel {
+  position: relative;
+  margin-top: 48px;
+}
+
+.gallery-slide {
+  position: relative;
+  min-height: 590px;
+  overflow: hidden;
+  background: #202020;
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(.22,.7,.25,1);
+  animation-fill-mode: both;
+}
+
+.gallery-slide-next {
+  animation-name: gallery-in-next;
+}
+
+.gallery-slide-previous {
+  animation-name: gallery-in-previous;
+}
+
+@keyframes gallery-in-next {
+  from { opacity: 0; transform: translateX(28px) scale(.988); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes gallery-in-previous {
+  from { opacity: 0; transform: translateX(-28px) scale(.988); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: 590px;
+  object-fit: cover;
+}
+
+.gallery-slide::after {
+  position: absolute;
+  inset: 48% 0 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.82));
+}
+
+.gallery-slide figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 28px;
+}
+
+.gallery-slide figcaption > span {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.gallery-slide figcaption div {
+  text-align: right;
+}
+
+.gallery-slide figcaption strong {
+  display: block;
+  font-size: 19px;
+}
+
+.gallery-slide figcaption p {
+  margin-top: 4px;
+  color: #c9c6c0;
+  font-size: 13px;
+}
+
+.gallery-controls,
+.review-deck-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.gallery-controls button,
+.review-deck-controls button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid currentColor;
+  place-items: center;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.gallery-controls span,
+.review-deck-controls span {
+  min-width: 48px;
+  color: var(--muted-dark);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Review shuffle deck */
+.reviews-section {
+  grid-template-columns: minmax(340px, .72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+}
+
+.review-deck {
+  position: relative;
+  min-height: 520px;
+  padding: clamp(58px, 6vw, 88px) clamp(36px, 5vw, 82px);
+  overflow: hidden;
+}
+
+.review-deck-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(72%, 650px);
+  height: 330px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.46);
+  transform-origin: center;
+}
+
+.review-deck-layer-back {
+  transform: translate(-46%, -53%) rotate(3.5deg);
+  opacity: .52;
+}
+
+.review-deck-layer-middle {
+  transform: translate(-52%, -49%) rotate(-2deg);
+  opacity: .74;
+}
+
+.review-feature-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: min(78%, 690px);
+  min-height: 350px;
+  margin: 0 auto;
+  padding: clamp(30px, 4vw, 48px);
+  border: 1px solid var(--line);
+  flex-direction: column;
+  justify-content: space-between;
+  background: #f8f6f0;
+  box-shadow: 0 26px 70px rgba(0,0,0,.08);
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(.22,.7,.25,1);
+  animation-fill-mode: both;
+}
+
+.review-feature-card-next {
+  animation-name: review-draw-next;
+}
+
+.review-feature-card-previous {
+  animation-name: review-draw-previous;
+}
+
+@keyframes review-draw-next {
+  from { opacity: 0; transform: translate(28px, -10px) rotate(1.2deg) scale(.985); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+}
+
+@keyframes review-draw-previous {
+  from { opacity: 0; transform: translate(-28px, -10px) rotate(-1.2deg) scale(.985); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+}
+
+.review-feature-card blockquote {
+  margin: 34px 0;
+  color: #2e2c29;
+  font-size: clamp(19px, 1.6vw, 25px);
+  line-height: 1.55;
+}
+
+.review-feature-card footer {
+  display: grid;
+  gap: 5px;
+}
+
+.review-feature-card footer strong {
+  font-size: 15px;
+}
+
+.review-feature-card footer span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.review-deck-controls {
+  position: relative;
+  z-index: 4;
+  width: min(78%, 690px);
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--ink);
+}
+
+/* Footer: structured rather than loose */
+.footer-main {
+  grid-template-columns: minmax(220px, 1.05fr) minmax(200px, .85fr) minmax(190px, .8fr) minmax(150px, .55fr);
+  align-items: start;
+  gap: clamp(34px, 5vw, 76px);
+  padding-top: 58px;
+  padding-bottom: 58px;
+}
+
+.footer-brand-block > img {
+  width: min(230px, 100%);
+  height: 120px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.footer-brand-block p {
+  max-width: 280px;
+  margin-top: 18px;
+  color: #8f8b84;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-column {
+  display: grid;
+  align-content: start;
+  gap: 11px;
+}
+
+.footer-column > strong {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.footer-column a,
+.footer-column span,
+.footer-column p {
+  overflow-wrap: anywhere;
+  color: #c3c0b9;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.footer-column a:hover {
+  color: var(--white);
+}
+
+/* Responsive refinements */
+@media (max-width: 1180px) {
+  .hero {
+    grid-template-columns: 1fr .8fr;
+  }
+
+  .hero-brand-mark {
+    width: min(68%, 400px);
+  }
+
+  .reviews-section {
+    grid-template-columns: 1fr;
+  }
+
+  .review-deck {
+    min-height: 500px;
+  }
+
+  .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .hero h1 {
+    font-size: clamp(48px, 13vw, 74px);
+  }
+
+  .hero-brand-visual {
+    min-height: 480px;
+    border-top: 1px solid var(--line-dark);
+    border-left: 0;
+  }
+
+  .hero-brand-mark {
+    width: min(58%, 390px);
+  }
+
+  .section-content,
+  .gallery-content,
+  .method-copy,
+  .reviews-intro,
+  .contact-block {
+    padding: 58px 24px;
+  }
+
+  .section-rail {
+    padding: 22px 24px;
+  }
+
+  .gallery-slide,
+  .gallery-slide img {
+    min-height: 460px;
+    height: 460px;
+  }
+
+  .review-deck {
+    min-height: 460px;
+    padding: 58px 24px;
+  }
+
+  .review-deck-layer,
+  .review-feature-card,
+  .review-deck-controls {
+    width: min(88%, 680px);
+  }
+
+  .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 38px 28px;
+    padding: 48px 24px;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero h1 {
+    font-size: clamp(44px, 13.5vw, 62px);
+  }
+
+  .section-heading h2,
+  .method-copy h2,
+  .reviews-intro h2,
+  .contact-block h2,
+  .quote-intro h2 {
+    font-size: clamp(34px, 10.5vw, 48px);
+  }
+
+  .hero-brand-visual {
+    min-height: 390px;
+  }
+
+  .hero-brand-mark {
+    width: min(70%, 320px);
+  }
+
+  .hero-brand-shape-one {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-brand-shape-two {
+    width: 72px;
+    height: 72px;
+  }
+
+  .gallery-slide,
+  .gallery-slide img {
+    min-height: 360px;
+    height: 360px;
+  }
+
+  .gallery-slide figcaption {
+    padding: 20px;
+  }
+
+  .review-deck {
+    min-height: 430px;
+    padding: 48px 18px 52px;
+  }
+
+  .review-deck-layer,
+  .review-feature-card,
+  .review-deck-controls {
+    width: 92%;
+  }
+
+  .review-deck-layer {
+    height: 310px;
+  }
+
+  .review-feature-card {
+    min-height: 330px;
+    padding: 28px 22px;
+  }
+
+  .review-feature-card blockquote {
+    font-size: 18px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .footer-brand-block > img {
+    height: 105px;
+  }
+}

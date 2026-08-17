@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   ChangeEvent,
   FormEvent,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -120,27 +121,6 @@ const reviews = [
   },
 ];
 
-const gallery = [
-  {
-    src: "/girard-plomberie/remplacement-ballon-eau-chaude.jpg",
-    alt: "Remplacement d’un ballon d’eau chaude par Girard Plomberie",
-    title: "Ballon d’eau chaude",
-    note: "Remplacement et raccordements",
-  },
-  {
-    src: "/girard-plomberie/lavabo-sur-wc.jpg",
-    alt: "Lavabo installé sur un WC standard",
-    title: "Sanitaire compact",
-    note: "Lavabo sur WC standard",
-  },
-  {
-    src: "/girard-plomberie/attente-machine-a-laver.jpg",
-    alt: "Création d’une arrivée d’eau froide et d’une évacuation pour machine à laver",
-    title: "Raccordement sur mesure",
-    note: "Arrivée d’eau et évacuation pour machine à laver",
-  },
-];
-
 const propertyTypes = [
   "Appartement",
   "Maison",
@@ -203,6 +183,59 @@ function CheckIcon() {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="m5 12.5 4.2 4.2L19 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function ReviewDeck() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<"next" | "previous">("next");
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+
+    const timer = window.setInterval(() => {
+      setDirection("next");
+      setActiveIndex((current) => (current + 1) % reviews.length);
+    }, 6500);
+
+    return () => window.clearInterval(timer);
+  }, [paused]);
+
+  const review = reviews[activeIndex];
+
+  const previous = () => {
+    setDirection("previous");
+    setActiveIndex((current) => (current === 0 ? reviews.length - 1 : current - 1));
+  };
+
+  const next = () => {
+    setDirection("next");
+    setActiveIndex((current) => (current + 1) % reviews.length);
+  };
+
+  return (
+    <div
+      className="review-deck"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      <span className="review-deck-layer review-deck-layer-back" aria-hidden="true" />
+      <span className="review-deck-layer review-deck-layer-middle" aria-hidden="true" />
+      <article key={`${activeIndex}-${direction}`} className={`review-feature-card review-feature-card-${direction}`}>
+        <div className="review-top"><span>0{activeIndex + 1}</span><strong>★★★★★</strong></div>
+        <blockquote>“{review.text}”</blockquote>
+        <footer><strong>{review.name}</strong><span>{review.date}</span></footer>
+      </article>
+
+      <div className="review-deck-controls">
+        <button type="button" onClick={previous} aria-label="Avis précédent">←</button>
+        <span>{activeIndex + 1} / {reviews.length}</span>
+        <button type="button" onClick={next} aria-label="Avis suivant">→</button>
+      </div>
+    </div>
   );
 }
 
@@ -674,18 +707,20 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-visual">
-            <div className="hero-number">GP / 01</div>
-            <Image
-              src="/girard-plomberie/attente-machine-a-laver.jpg"
-              alt="Raccordement de plomberie réalisé par Girard Plomberie"
-              width={1400}
-              height={1043}
-              priority
-            />
-            <div className="hero-caption">
-              <span>Installation</span>
-              <strong>Arrivée d’eau & évacuation</strong>
+          <div className="hero-visual hero-brand-visual" aria-label="Girard Plomberie">
+            <div className="hero-brand-shape hero-brand-shape-one" aria-hidden="true" />
+            <div className="hero-brand-shape hero-brand-shape-two" aria-hidden="true" />
+            <div className="hero-brand-line hero-brand-line-one" aria-hidden="true" />
+            <div className="hero-brand-line hero-brand-line-two" aria-hidden="true" />
+            <div className="hero-brand-mark">
+              <Image
+                src="/girard-plomberie/logo.png"
+                alt="Girard Plomberie"
+                width={1892}
+                height={1224}
+                priority
+                sizes="(max-width: 900px) 68vw, 500px"
+              />
             </div>
           </div>
 
@@ -706,16 +741,11 @@ export default function Home() {
         <section className="services-section" id="services">
           <div className="section-rail">
             <p className="eyebrow">01 — Services</p>
-            <span>Installation</span>
-            <span>Dépannage</span>
           </div>
 
           <div className="section-content">
-            <div className="section-heading split-heading">
-              <h2>Des services organisés par besoin.</h2>
-              <p>
-                Les prestations similaires sont regroupées pour permettre de repérer rapidement le type d’intervention concerné.
-              </p>
+            <div className="section-heading">
+              <h2>Nos services.</h2>
             </div>
 
             <div className="service-ledger">
@@ -740,7 +770,7 @@ export default function Home() {
             <p className="eyebrow">02 — Façon de travailler</p>
             <h2>Comprendre avant de remplacer.</h2>
             <p>
-              Les avis clients reviennent sur la pédagogie, l’intégrité et les prix annoncés à l’avance. L’objectif est de rechercher la cause, d’expliquer les options et de réaliser une intervention propre.
+              Girard Plomberie recherche d’abord la cause du problème, présente les solutions possibles et réalise l’intervention adaptée avant de vérifier le bon fonctionnement et la propreté de la zone.
             </p>
             <a className="text-link" href="#avis">Lire les avis clients <ArrowIcon /></a>
           </div>
@@ -753,35 +783,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="gallery-section" id="realisations">
-          <div className="section-rail dark-rail">
-            <p className="eyebrow">03 — Réalisations</p>
-            <span>Travaux visibles</span>
-          </div>
-
-          <div className="gallery-content">
-            <div className="section-heading gallery-heading">
-              <h2>Des interventions concrètes.</h2>
-              <p>Trois exemples photographiés : remplacement de ballon, adaptation sanitaire et création de raccordement.</p>
-            </div>
-
-            <div className="gallery-grid">
-              {gallery.map((item, index) => (
-                <figure key={item.src} className={`gallery-card gallery-card-${index + 1}`}>
-                  <Image src={item.src} alt={item.alt} width={1400} height={1100} />
-                  <figcaption>
-                    <span>0{index + 1}</span>
-                    <div><strong>{item.title}</strong><p>{item.note}</p></div>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section className="reviews-section" id="avis">
           <div className="reviews-intro">
-            <p className="eyebrow">04 — Avis clients</p>
+            <p className="eyebrow">03 — Avis clients</p>
             <h2>Une réputation bâtie sur la clarté et le soin.</h2>
             <div className="reviews-score">
               <strong>4,9</strong>
@@ -789,20 +793,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="reviews-grid">
-            {reviews.map((review, index) => (
-              <article key={review.name} className="review-card">
-                <div className="review-top"><span>0{index + 1}</span><strong>★★★★★</strong></div>
-                <blockquote>“{review.text}”</blockquote>
-                <footer><strong>{review.name}</strong><span>{review.date}</span></footer>
-              </article>
-            ))}
-          </div>
+          <ReviewDeck />
         </section>
 
-        <section className="contact-section">
+        <section className="contact-section" id="contact">
           <div className="contact-block">
-            <p className="eyebrow">05 — Contact</p>
+            <p className="eyebrow">04 — Contact</p>
             <h2>Expliquez le problème. Les prochaines étapes deviennent plus simples.</h2>
             <div className="contact-actions">
               <a href={`tel:${PHONE_LINK}`}><span>Téléphone</span><strong>{PHONE_DISPLAY}</strong></a>
@@ -819,7 +815,7 @@ export default function Home() {
 
         <section className="quote-section" id="devis">
           <div className="quote-intro">
-            <p className="eyebrow">06 — Demande de devis</p>
+            <p className="eyebrow">05 — Demande de devis</p>
             <h2>Préparez votre demande en quelques étapes.</h2>
             <p>
               Sélectionnez le besoin, précisez le contexte et ajoutez des photos lorsqu’elles peuvent aider à comprendre la situation.
