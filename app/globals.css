@@ -2336,3 +2336,84 @@ ul {
     font-size: clamp(21px, 7vw, 27px) !important;
   }
 }
+
+/* GIRARD V5 — hard mobile-menu isolation: no page content can bleed through */
+@media (max-width: 900px) {
+  body.menu-open {
+    background: #101010 !important;
+  }
+
+  /* Remove the effect that can interfere with fixed descendants on mobile. */
+  .site-header {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* While the navigation is open, the page underneath is not rendered visibly. */
+  body.menu-open main,
+  body.menu-open .site-footer {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .mobile-menu {
+    position: fixed !important;
+    z-index: 70 !important;
+    top: var(--header-height) !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: calc(100dvh - var(--header-height)) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    color: #fff !important;
+    background: #101010 !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    isolation: isolate;
+  }
+
+  .mobile-menu::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background: #101010;
+  }
+
+  .mobile-menu-inner {
+    position: relative;
+    z-index: 1;
+    width: 100% !important;
+    max-width: 520px;
+    min-height: 100% !important;
+    margin: 0 auto !important;
+    padding: 32px 24px 40px !important;
+    color: #fff !important;
+    background: #101010 !important;
+  }
+
+  .mobile-menu-inner > a:not(.mobile-phone) {
+    min-height: 50px !important;
+    padding: 11px 0 !important;
+    color: #fff !important;
+    font-size: clamp(20px, 5.4vw, 25px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .mobile-menu-label {
+    color: var(--accent) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .mobile-menu-inner {
+    padding: 26px 20px 34px !important;
+  }
+
+  .mobile-menu-inner > a:not(.mobile-phone) {
+    font-size: clamp(19px, 6vw, 23px) !important;
+  }
+}
